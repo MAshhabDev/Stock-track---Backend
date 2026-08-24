@@ -1,18 +1,8 @@
 enum Role {
-  SUPER_ADMIN
   ADMIN
-  DOCTOR
-  PATIENT
+  STAFF
 }
-
-enum UserStatus {
-  ACTIVE
-  BLOCKED
-  DELETED
-}
-
-enum Gender {
-  MALE
-  FEMALE
-  OTHER
+enum MovementType {
+  IN
+  OUT
 }

@@ -5,11 +5,11 @@ import { sendResponse } from '../../utils/sendResponse'
 import { IRequestUser } from './auth.interface'
 import { AuthService } from './auth.service'
 
-const registerPatient = catchAsync(async (req: Request, res: Response) => {
+const registerUser = catchAsync(async (req: Request, res: Response) => {
     const payload = req.body
-    const result = await AuthService.registerPatient(payload)
+    const result = await AuthService.registerUser(payload)
 
-    const { accessToken, refreshToken, user, patient } = result
+    const { accessToken, refreshToken, user } = result
 
     res.cookie("accessToken", accessToken, {
         httpOnly: true,
@@ -32,7 +32,7 @@ const registerPatient = catchAsync(async (req: Request, res: Response) => {
             accessToken,
             refreshToken,
             user,
-            patient,
+            
         },
     })
 })
@@ -68,11 +68,9 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 
 const getMe = catchAsync(async (req: Request, res: Response) => {
     const user = req.user as unknown as IRequestUser
-
     if (!user) {
         throw new Error('User information is missing in the request')
     }
-
     const result = await AuthService.getMe(user)
     sendResponse(res, {
         statusCode: httpStatus.OK,
@@ -115,7 +113,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 
 
 export const AuthController = {
-    registerPatient,
+    registerUser,
     loginUser,
     getMe,
     refreshToken,
