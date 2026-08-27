@@ -4,7 +4,6 @@ import { ICreateProductPayload, IProductFilterRequest, IUpdateProductPayload } f
 
 const createProduct = async (payload: ICreateProductPayload, userId: string) => {
     const { name, sku, price, stockQuantity, lowStockLimit, categoryId } = payload
-    // SKU অনন্য কিনা চেক
     const isSkuExists = await prisma.product.findUnique({
         where: { sku },
     })
