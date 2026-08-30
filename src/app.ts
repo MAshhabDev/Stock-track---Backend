@@ -5,7 +5,11 @@ import httpStatus from "http-status"
 import config from './app/config'
 import { globalErrorHandler } from './app/middleware/globalErrorHandler'
 import { notFound } from './app/middleware/notFound'
+
 import { AuthRoutes } from './app/module/auth/auth.route'
+import { CategoryRoutes } from './app/module/category/category.route'
+import { ProductRoutes } from './app/module/product/product.route'
+import { StockRoutes } from './app/module/stock/stock.route'
 
 const app: Application = express()
 
@@ -16,20 +20,22 @@ app.use(
     }),
 )
 
-// Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }))
 
-// Middleware to parse JSON bodies
 app.use(express.json())
 app.use(cookieParser())
 
+// 🚀 Register All API Routes
 app.use('/api/v1/auth', AuthRoutes)
+app.use('/api/v1/categories', CategoryRoutes)
+app.use('/api/v1/products', ProductRoutes)
+app.use('/api/v1', StockRoutes) // Stock IN/OUT (/products/:id/stock) & Movements (/products/:id/movements)
 
-// Basic route
+// Basic Welcome Route
 app.get('/', async (req: Request, res: Response) => {
     res.status(httpStatus.OK).json({
         success: true,
-        message: 'Welcome to Store Track Backend',
+        message: 'Welcome to StockTrack Inventory Management API',
     })
 })
 
